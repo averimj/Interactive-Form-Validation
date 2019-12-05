@@ -21,3 +21,5 @@ $('#title').change(function(){
 
 // creates a 'Please Select Theme' message as the first option in the dropdown box
 $('#color').prepend('<option value="color_please" selected>Please Select Theme</option>');
+// hides all shirt color selections and only shows the 'Please Select Theme'
+$('#color option:not(:first)').hide();
