@@ -42,5 +42,5 @@ $('#design').change(function(){
     $('#color>option:eq(1)').hide()
     $('#color>option:eq(2)').hide()
     $('#color>option:eq(3)').hide()
- }
+  }
 });
