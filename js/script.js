@@ -23,3 +23,24 @@ $('#title').change(function(){
 $('#color').prepend('<option value="color_please" selected>Please Select Theme</option>');
 // hides all shirt color selections and only shows the 'Please Select Theme'
 $('#color option:not(:first)').hide();
+
+
+// adds an eventListener...if the 'Design Theme' changes, only show the user certain 'color themes' and hide the rest
+$('#design').change(function(){
+  const $designTheme = $(this).val();
+  if ($designTheme == 'js puns'){
+
+    $('#color option:first-child').hide();
+    $('#color>option:eq(1)').prop('selected', true).show()
+    $('#color>option:eq(2)').show()
+    $('#color>option:eq(3)').show()
+  } else {
+    $('#color option:first-child').hide();
+    $('#color>option:eq(4)').prop('selected', true).show()
+    $('#color>option:eq(5)').show()
+    $('#color>option:eq(6)').show()
+    $('#color>option:eq(1)').hide()
+    $('#color>option:eq(2)').hide()
+    $('#color>option:eq(3)').hide()
+  }
+});
