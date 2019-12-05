@@ -44,3 +44,7 @@ $('#design').change(function(){
     $('#color>option:eq(3)').hide()
   }
 });
+
+
+// adds DOM element to activity section
+$('.activities').append('<div id="total">$0</div>');
