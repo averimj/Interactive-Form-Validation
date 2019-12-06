@@ -44,3 +44,19 @@ $('#design').change(function(){
     $('#color>option:eq(3)').hide()
   }
 });
+
+
+// adds DOM element to activity section
+$('.activities').append('<div id="total">$0</div>');
+
+
+// adds the cost calculator to the activities section
+$(document).ready(function() {
+  $('label').click(function() {
+    var total = 0;
+     $('input[type="checkbox"]:checked').each(function() {
+      total += parseInt($(this).attr('data-cost')) ;
+    });
+    $('#total').html('$' + total);
+  });
+});
