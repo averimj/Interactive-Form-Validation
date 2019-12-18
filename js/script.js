@@ -96,3 +96,7 @@ $('.activities').change(function(e) {
 
 // hides the "select payment method" from the dropdown
 $('#payment option:first-child').hide();
+
+
+// sets credit card as the default payment method
+$('select option[value="credit card"]').attr('selected',true);
