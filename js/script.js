@@ -69,48 +69,65 @@ $('label').click(function() {
   $('#total').html('$' + total);
 });
 
-/* it aint pretty but it works ... this checks for a "change" on the activities checkboxes ...
-each time a change occurs, it iterates thru the activities ... if jsFramework is checked, it disables the
-expWorkshop box because the times conflict ... and if the expWorkshop box is checked, it disables the jsFramework box
 
-the same thing is happening with the jsLibrary and nodesWorkshop boxes
+/* when the user picks a workshop, it checks to see if that 'day and time', is equal to any other workshops
+if it is, then disable the other workshop, and make it non-clickable
+
+this doesn't work properly ... disables and unchecks activities with the same 'day-and-time' but also
+disables the other activities as well
 */
-const workshops = $('.activities input');
-
-$('.activities').change(function(){
+$('.activities').change(function(e) {
+  let target = e.target;
+  const targetAttributes = $(target).attr('data-day-and-time');
   workshops.each(function() {
-    var jsFramework = $('input[name="js-frameworks"]');
-    var expWorkshop = $('input[name="express"]');
-    var jsLibrary = $('input[name="js-libs"]');
-    var nodesWorkshop = $('input[name="node"]');
+    const eachValue = $(this).attr('data-day-and-time');
+    if(targetAttributes === eachValue ){
+      if($(target).is(':checked')){
+        $(target).attr('disabled', false);
+        $(this).attr('disabled', true);
+        } else {
+        $(this).attr('disabled', false);
+        $(this).attr('checked', true);
+      }
+    }
+  })
+});
 
-    if (jsFramework.is(':checked')) {
-      $(jsFramework).attr(':checked', true);
-      $(expWorkshop).attr('disabled', true);
-      $(expWorkshop).attr('checked', false);
-    } else  {
-      $(expWorkshop).attr('disabled', false);
+
+// hides the "select payment method" from the dropdown
+$('#payment option:first-child').hide();
+
+
+// sets credit card as the default payment method
+$('select option[value="credit card"]').attr('selected',true);
+
+
+// hides paypal and bitcoin payment methods
+$('.paypal').hide();
+$('.bitcoin').hide();
+
+
+/* if the payment is credit card, show the credit card payment info and hide the rest
+  if payment is paypal, show the paypal payment info and hide the rest
+  if payment is bitcoin, show the bitcoin payment info and hide the rest
+*/
+$('#payment').change(function(){
+  let value = $(this).val();
+    if (value == 'credit card') {
+      $('.credit-card').show();
+      $('.paypal').hide();
+      $('.bitcoin').hide();
+    } else {
+      if (value == 'paypal') {
+        $('.paypal').show();
+        $('.credit-card').hide();
+        $('.bitcoin').hide();
+    } else {
+      if (value == 'bitcoin') {
+        $('.bitcoin').show();
+        $('.credit-card').hide();
+        $('.paypal').hide();
+      }
     }
-    if(expWorkshop.is(':checked')) {
-      $(expWorkshop).attr(':checked', true);
-      $(jsFramework).attr('disabled', true);
-      $(jsFramework).attr('checked', false);
-    } else  {
-      $(jsFramework).attr('disabled', false);
-    }
-    if(jsLibrary.is(':checked')) {
-      $(jsLibrary).attr(':checked', true);
-      $(nodesWorkshop).attr('disabled', true);
-      $(nodesWorkshop).attr('checked', false);
-    } else  {
-      $(nodesWorkshop).attr('disabled', false);
-    }
-    if(nodesWorkshop.is(':checked')) {
-      $(nodesWorkshop).attr(':checked', true);
-      $(jsLibrary).attr('disabled', true);
-      $(jsLibrary).attr('checked', false);
-    } else  {
-      $(jsLibrary).attr('disabled', false);
-    }
-  });
+  }
 });
