@@ -92,3 +92,7 @@ $('.activities').change(function(e) {
     }
   })
 });
+
+
+// hides the "select payment method" from the dropdown
+$('#payment option:first-child').hide();
