@@ -100,3 +100,8 @@ $('#payment option:first-child').hide();
 
 // sets credit card as the default payment method
 $('select option[value="credit card"]').attr('selected',true);
+
+
+// hides paypal and bitcoin payment methods
+$('.paypal').hide();
+$('.bitcoin').hide();
