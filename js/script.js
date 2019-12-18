@@ -105,3 +105,29 @@ $('select option[value="credit card"]').attr('selected',true);
 // hides paypal and bitcoin payment methods
 $('.paypal').hide();
 $('.bitcoin').hide();
+
+
+/* if the payment is credit card, show the credit card payment info and hide the rest
+  if payment is paypal, show the paypal payment info and hide the rest
+  if payment is bitcoin, show the bitcoin payment info and hide the rest
+*/
+$('#payment').change(function(){
+  let value = $(this).val();
+    if (value == 'credit card') {
+      $('.credit-card').show();
+      $('.paypal').hide();
+      $('.bitcoin').hide();
+    } else {
+      if (value == 'paypal') {
+        $('.paypal').show();
+        $('.credit-card').hide();
+        $('.bitcoin').hide();
+    } else {
+      if (value == 'bitcoin') {
+        $('.bitcoin').show();
+        $('.credit-card').hide();
+        $('.paypal').hide();
+      }
+    }
+  }
+});
