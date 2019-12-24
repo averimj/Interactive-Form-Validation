@@ -161,3 +161,18 @@ $('#mail').on('focusout', function(e) {
     return true;
   }
 });
+
+// ensures the credit card entered is valid, if not, makes the border red
+$('#cc-num').on('focusout', function(e) {
+  let regexCredit = /^(\d{4})-?(\d{4})-?(\d{4})-?(\d{4})$/;
+  let creditCardNum = $(e.target);
+  if( !$(creditCardNum).val().match(regexCredit) || $(creditCardNum) == '') {
+    $(creditCardNum).addClass('invalid');
+    $(creditCardNum).removeClass('valid');
+    return false;
+  } else {
+    $(creditCardNum).addClass('valid');
+    $(creditCardNum).removeClass('invalid');
+    return true;
+  }
+});
