@@ -176,3 +176,18 @@ $('#cc-num').on('focusout', function(e) {
     return true;
   }
 });
+
+// ensures the zip code entered is valid, if not, makes the border red
+$('#zip').on('focusout', function(e) {
+  let regexZip = /^[0-9]{5}$/;
+  let creditZip = $(e.target);
+  if( !$('#zip').val().match(regexZip) || $(creditZip) == '') {
+    creditZip.addClass('invalid');
+    creditZip.removeClass('valid');
+    return false;
+  } else {
+    creditZip.addClass('valid');
+    creditZip.addClass('invalid');
+    return true;
+  }
+});
