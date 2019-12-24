@@ -191,3 +191,18 @@ $('#zip').on('focusout', function(e) {
     return true;
   }
 });
+
+// ensures the cvv entered is valid, if not, makes the border red
+$('#cvv').on('focusout', function(e){
+let $regexCvv = /^\d{3,4}$/;
+let creditCvv = $(e.target);
+  if( !$(creditCvv).val().match($regexCvv) || $(creditCvv) == '') {
+    creditCvv.addClass('invalid');
+    creditCvv.removeClass('valid');
+    return false;
+  } else {
+    creditCvv.addClass('valid');
+    creditCvv.removeClass('invalid');
+    return true;
+  }
+});
