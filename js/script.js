@@ -132,16 +132,32 @@ $('#payment').change(function(){
 
                     /*VALIDATION*/
 // ensures the name entered is valid, if not, makes the border red
+// ensures the name entered is valid, if not, makes the border red
 $('#name').on('focusout', function(e) {
-  let $regexName = /^([a-zA-Z]{3,16})$/;
+  let regexName = /^[a-zA-Z ]{3,16}$/;
   let name = $(e.target);
-  if( !$(name).val().match($regexName) || !$(name) == ''){
+  if( !$(name).val().match(regexName) || $(name) == ''){
     name.addClass('invalid');
     name.removeClass('valid');
     return false;
   } else {
     name.addClass('valid');
     name.removeClass('invalid');
+    return true;
+  }
+});
+
+// ensures the email entered is valid, if not, makes the border red
+$('#mail').on('focusout', function(e) {
+  let regexEmail = /\w.+@[a-zA-Z_-]+\.[a-zA-Z]{2,3}$/;
+  let mail = $(e.target);
+  if( !$(mail).val().match(regexEmail) || $(mail) == '') {
+    mail.addClass('invalid');
+    mail.removeClass('valid');
+    return false;
+  } else {
+    mail.addClass('valid');
+    mail.removeClass('invalid');
     return true;
   }
 });
