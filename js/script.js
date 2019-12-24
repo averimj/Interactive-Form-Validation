@@ -1,14 +1,13 @@
-
+                    /*FIRST NAME*/
 // ensures the cursor will appear in the 'first name' input on the page -- stackoverflow.com
 $(':input:enabled:visible:first').focus();
 
 
+                    /*JOB ROLE*/
 // hides the textarea box
 $('#other-title').hide();
 
-
-/* adds an eventListener to the 'other' option using .change
-if user clicks on 'other', than a textarea box will appear */
+// if user clicks on 'other', than a textarea box will appear
 $('#title').change(function(){
   const value = $(this).val();
   if (value == 'other'){
@@ -19,15 +18,16 @@ $('#title').change(function(){
 });
 
 
+                    /*SHIRT THEME*/
 // creates a 'Please Select Theme' message as the first option in the dropdown box
 $('#color').prepend('<option value="color_please" selected>Please Select Theme</option>');
-
 
 // hides all shirt color selections and only shows the 'Please Select Theme'
 $('#color option:not(:first)').hide();
 
-
-// adds an eventListener...if the 'Design Theme' changes, only show the user certain 'color themes' and hide the rest
+/* if the user selects 'js puns', only show the first 3 color themes and hide the rest,
+  if the user selects 'I Heart js', only show the last 3 color themes and hide the rest
+*/
 $('#design').change(function(){
   const designTheme = $(this).val();
   if (designTheme == 'js puns'){
@@ -53,12 +53,12 @@ $('#design').change(function(){
 });
 
 
+                    /*ACTIVITY*/
 // adds DOM element to activity section
 const totalOfActivities = $('.activities').append('<div id="total">$0</div>');
 
 // creates global 'input' variable
 const input = $('input[type="checkbox"]')
-
 
 // adds the cost calculator to the activities section
 $('label').click(function() {
@@ -68,7 +68,6 @@ $('label').click(function() {
   });
   $('#total').html('$' + total);
 });
-
 
 /* when the user picks a workshop, it checks to see if that 'day and time', is equal to any other workshops
 if it is, then disable the other workshop, and make it non-clickable
@@ -94,18 +93,16 @@ $('.activities').change(function(e) {
 });
 
 
+                    /*PAYMENT*/
 // hides the "select payment method" from the dropdown
 $('#payment option:first-child').hide();
-
 
 // sets credit card as the default payment method
 $('select option[value="credit card"]').attr('selected',true);
 
-
 // hides paypal and bitcoin payment methods
 $('.paypal').hide();
 $('.bitcoin').hide();
-
 
 /* if the payment is credit card, show the credit card payment info and hide the rest
   if payment is paypal, show the paypal payment info and hide the rest
@@ -129,5 +126,22 @@ $('#payment').change(function(){
         $('.paypal').hide();
       }
     }
+  }
+});
+
+
+                    /*VALIDATION*/
+// ensures the name entered is valid, if not, makes the border red
+$('#name').on('focusout', function(e) {
+  let $regexName = /^([a-zA-Z]{3,16})$/;
+  let name = $(e.target);
+  if( !$(name).val().match($regexName) || !$(name) == ''){
+    name.addClass('invalid');
+    name.removeClass('valid');
+    return false;
+  } else {
+    name.addClass('valid');
+    name.removeClass('invalid');
+    return true;
   }
 });
