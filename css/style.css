@@ -1,4 +1,4 @@
-/* ================================= 
+/* =================================
   Base Element Styles
 ==================================== */
 
@@ -11,37 +11,51 @@
 body,
 input,
 button {
-	font-family: 'Nunito', sans-serif;
+  font-family: 'Fantasy', sans-serif;
+
 }
 
 body {
   font: 1em/1.5;
   color: rgba(6, 49, 68, 0.9);
-	background: #CDE0FB;
+  background: #bc7dac;
 }
 
 header {
-	text-align: center;  
+	text-align: left;
+}
+
+span {
+font-family: 'Fantasy';
+font-size: 2em;
 }
 
 h1 {
-	font-size: 2.5em;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
-	margin: 0;
+font-family: 'Fantasy';
+font-size: 3em;
+border-bottom: 2px solid pink;
+border-right: 2px solid pink;
+width: 400px;
+text-align: center;
+box-shadow: 4px 4px 5px #888888;
+margin-top: 10px;
 }
 
 a {
   text-decoration: none;
 }
 
-/* ================================= 
+/* =================================
   Form Element Styles
 ==================================== */
 
+
 form {
 	padding: .875em 1.875em 1.875em;
-	background: #9BBEEF;
+  background: #f2bfb3;
+  /* background: #9d4e89; */
 	border: 2px solid rgba(8, 63, 87, 0.6);
+  /* border: 2px solid #3f002f; */
 	border-radius: 3px;
 }
 
@@ -58,7 +72,7 @@ fieldset {
 
 legend,
 button {
-	font-size: 1.25em;	
+	font-size: 1.25em;
 }
 
 legend {
@@ -82,7 +96,7 @@ label {
 
 input,
 select {
-	margin-bottom: 1.125em;	
+	margin-bottom: 1.125em;
 }
 
 input {
@@ -121,13 +135,24 @@ button:hover {
 	background: #6F9DDC;
 }
 
-input, 
-select, 
+input,
+select,
 option {
-	font-family: 'roboto', sans-serif;
+  font-family: 'Fantasy', sans-serif;
 }
 
-/* ================================= 
+
+/* STUFF I BORROWED  */
+
+input.invalid, textarea.invalid {
+	border: 2px solid red;
+}
+
+input.valid, textarea.valid {
+	border: 2px solid green;
+}
+
+/* =================================
   Page Styles
 ==================================== */
 
@@ -166,7 +191,7 @@ option {
 	border-radius: 4px;
 }
 
-/* ================================= 
+/* =================================
   Helper Classes
 ==================================== */
 
@@ -180,7 +205,7 @@ option {
   clear: both;
 }
 
-/* ================================= 
+/* =================================
   Media Queries
 ==================================== */
 
