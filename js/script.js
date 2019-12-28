@@ -1,6 +1,6 @@
                     /*FIRST NAME*/
 // ensures the cursor will appear in the 'first name' input on the page -- stackoverflow.com
-$(':input:enabled:visible:first').focus();
+$('#name').focus();
 
 
                     /*JOB ROLE*/
@@ -78,7 +78,7 @@ disables the other activities as well
 $('.activities').change(function(e) {
   let target = e.target;
   const targetAttributes = $(target).attr('data-day-and-time');
-  workshops.each(function() {
+  input.each(function() {
     const eachValue = $(this).attr('data-day-and-time');
     if(targetAttributes === eachValue ){
       if($(target).is(':checked')){
@@ -136,7 +136,8 @@ $('#payment').change(function(){
 $('#name').on('focusout', function(e) {
   let regexName = /^[a-zA-Z ]{3,16}$/;
   let name = $(e.target);
-  if( !$(name).val().match(regexName) || $(name) == ''){
+  if( !$(name).val().match(regexName) && !name == ''){
+
     name.addClass('invalid');
     name.removeClass('valid');
     return false;
@@ -151,7 +152,8 @@ $('#name').on('focusout', function(e) {
 $('#mail').on('focusout', function(e) {
   let regexEmail = /\w.+@[a-zA-Z_-]+\.[a-zA-Z]{2,3}$/;
   let mail = $(e.target);
-  if( !$(mail).val().match(regexEmail) || $(mail) == '') {
+  if( !$(mail).val().match(regexEmail) || !mail == '') {
+
     mail.addClass('invalid');
     mail.removeClass('valid');
     return false;
@@ -164,9 +166,10 @@ $('#mail').on('focusout', function(e) {
 
 // ensures the credit card entered is valid, if not, makes the border red
 $('#cc-num').on('focusout', function(e) {
-  let regexCredit = /^(\d{4})-?(\d{4})-?(\d{4})-?(\d{4})$/;
+  let regexCredit = /^\d{11,16}$/;
   let creditCardNum = $(e.target);
-  if( !$(creditCardNum).val().match(regexCredit) || $(creditCardNum) == '') {
+  if( !$(creditCardNum).val().match(regexCredit) ||  !creditCardNum == '') {
+
     $(creditCardNum).addClass('invalid');
     $(creditCardNum).removeClass('valid');
     return false;
@@ -181,7 +184,8 @@ $('#cc-num').on('focusout', function(e) {
 $('#zip').on('focusout', function(e) {
   let regexZip = /^[0-9]{5}$/;
   let creditZip = $(e.target);
-  if( !$('#zip').val().match(regexZip) || $(creditZip) == '') {
+  if( !$('#zip').val().match(regexZip) || !creditZip == '') {
+
     creditZip.addClass('invalid');
     creditZip.removeClass('valid');
     return false;
@@ -196,7 +200,7 @@ $('#zip').on('focusout', function(e) {
 $('#cvv').on('focusout', function(e){
 let $regexCvv = /^\d{3,4}$/;
 let creditCvv = $(e.target);
-  if( !$(creditCvv).val().match($regexCvv) || $(creditCvv) == '') {
+  if( !$(creditCvv).val().match($regexCvv) || !creditCvv == '') {
     creditCvv.addClass('invalid');
     creditCvv.removeClass('valid');
     return false;
