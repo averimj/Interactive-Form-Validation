@@ -1,16 +1,16 @@
-                    /*FIRST NAME*/
+/*FIRST NAME*/
 // ensures the cursor will appear in the 'first name' input on the page -- stackoverflow.com
 $('#name').focus();
 
 
-                    /*JOB ROLE*/
+/*JOB ROLE*/
 // hides the textarea box
 $('#other-title').hide();
 
 // if user clicks on 'other', than a textarea box will appear
-$('#title').change(function(){
+$('#title').change(function() {
   const value = $(this).val();
-  if (value == 'other'){
+  if (value == 'other') {
     $('#other-title').show();
   } else {
     $('#other-title').hide();
@@ -18,7 +18,7 @@ $('#title').change(function(){
 });
 
 
-                    /*SHIRT THEME*/
+/*SHIRT THEME*/
 // creates a 'Please Select Theme' message as the first option in the dropdown box
 $('#color').prepend('<option value="color_please" selected>Please Select Theme</option>');
 
@@ -26,11 +26,11 @@ $('#color').prepend('<option value="color_please" selected>Please Select Theme</
 $('#color option:not(:first)').hide();
 
 /* if the user selects 'js puns', only show the first 3 color themes and hide the rest,
-  if the user selects 'I Heart js', only show the last 3 color themes and hide the rest
+if the user selects 'I Heart js', only show the last 3 color themes and hide the rest
 */
-$('#design').change(function(){
+$('#design').change(function() {
   const designTheme = $(this).val();
-  if (designTheme == 'js puns'){
+  if (designTheme == 'js puns') {
 
     $('#color option:first-child').hide();
     $('#color>option:eq(1)').prop('selected', true).show()
@@ -49,76 +49,78 @@ $('#design').change(function(){
     $('#color>option:eq(1)').hide()
     $('#color>option:eq(2)').hide()
     $('#color>option:eq(3)').hide()
- }
+  }
 });
 
 
-                    /*ACTIVITY*/
+/*ACTIVITY*/
 // adds DOM element to activity section
 const totalOfActivities = $('.activities').append('<div id="total">$0</div>');
 
 // creates global 'input' variable
 const input = $('input[type="checkbox"]')
+// const workshops = $('.activities input');
 
 // adds the cost calculator to the activities section
 $('label').click(function() {
   var total = 0;
-   $('input:checked').each(function() {
-    total += parseInt($(this).attr('data-cost')) ;
+  $('input:checked').each(function() {
+    total += parseInt($(this).attr('data-cost'));
   });
   $('#total').html('$' + total);
 });
 
 /* when the user picks a workshop, it checks to see if that 'day and time', is equal to any other workshops
-if it is, then disable the other workshop, and make it non-clickable
+if it is, then disable the other workshop, and make it non-clickable */
 
-this doesn't work properly ... disables and unchecks activities with the same 'day-and-time' but also
-disables the other activities as well
-*/
+console.log(input);
+
 $('.activities').change(function(e) {
   let target = e.target;
-  const targetAttributes = $(target).attr('data-day-and-time');
-  input.each(function() {
-    const eachValue = $(this).attr('data-day-and-time');
-    if(targetAttributes === eachValue ){
-      if($(target).is(':checked')){
+  const targetTime = $(target).attr('data-day-and-time');
+  input.each(function(index, value) {
+    const currentTime = $(value).attr('data-day-and-time');
+    if (targetTime === currentTime && target.name !== value.name) {
+      if ($(target).is(':checked')) {
         $(target).attr('disabled', false);
-        $(this).attr('disabled', true);
-        } else {
-        $(this).attr('disabled', false);
-        $(this).attr('checked', true);
+        $(value).attr('disabled', true);
+      } else {
+        $(target).attr('disabled', false);
+        $(value).attr('disabled', false);
       }
     }
-  })
+  });
 });
 
 
-                    /*PAYMENT*/
+/*PAYMENT*/
 // hides the "select payment method" from the dropdown
 $('#payment option:first-child').hide();
 
 // sets credit card as the default payment method
-$('select option[value="credit card"]').attr('selected',true);
+$('select option[value="credit card"]').attr('selected', true);
+// $('select option[value="credit card"]').is(':selected');
+
 
 // hides paypal and bitcoin payment methods
 $('.paypal').hide();
 $('.bitcoin').hide();
 
 /* if the payment is credit card, show the credit card payment info and hide the rest
-  if payment is paypal, show the paypal payment info and hide the rest
-  if payment is bitcoin, show the bitcoin payment info and hide the rest
+if payment is paypal, show the paypal payment info and hide the rest
+if payment is bitcoin, show the bitcoin payment info and hide the rest
 */
-$('#payment').change(function(){
+$('#payment').change(function() {
   let value = $(this).val();
-    if (value == 'credit card') {
-      $('.credit-card').show();
-      $('.paypal').hide();
+  if (value == 'credit card') {
+    $('.credit-card').show();
+    $('.paypal').hide();
+    $('.bitcoin').hide();
+  } else {
+    if (value == 'paypal') {
+      $('.paypal').show();
+      $('.credit-card').hide();
       $('.bitcoin').hide();
-    } else {
-      if (value == 'paypal') {
-        $('.paypal').show();
-        $('.credit-card').hide();
-        $('.bitcoin').hide();
     } else {
       if (value == 'bitcoin') {
         $('.bitcoin').show();
@@ -130,83 +132,85 @@ $('#payment').change(function(){
 });
 
 
-                    /*VALIDATION*/
-// ensures the name entered is valid, if not, makes the border red
-// ensures the name entered is valid, if not, makes the border red
-$('#name').on('focusout', function(e) {
-  let regexName = /^[a-zA-Z ]{3,16}$/;
-  let name = $(e.target);
-  if( !$(name).val().match(regexName) && !name == ''){
+/*VALIDATION*/
+$('.container').submit( (e) => {
+  e.preventDefault();
+  let name = $('#name').val();
+  let email = $('#mail').val();
+  let checkedWorkshop = $('input:checked')
+  let ccNum = $('#cc-num').val();
+  let zipCode = $('#zip').val();
+  let cvv = $('#cvv').val();
 
-    name.addClass('invalid');
-    name.removeClass('valid');
-    return false;
+  $(".error").remove();
+
+  if (name.length < 1) {
+    $('#name').after('<span class="error">Name is required</span>');
   } else {
-    name.addClass('valid');
-    name.removeClass('invalid');
-    return true;
-  }
-});
+    let regexName = /^[a-zA-Z ]{3,16}$/;
+    let validName = regexName.test(name);
+      if (!validName) {
+        $('#name').after('<span class="error">Enter a valid name</span>')
+    }
+  };
 
-// ensures the email entered is valid, if not, makes the border red
-$('#mail').on('focusout', function(e) {
-  let regexEmail = /\w.+@[a-zA-Z_-]+\.[a-zA-Z]{2,3}$/;
-  let mail = $(e.target);
-  if( !$(mail).val().match(regexEmail) || !mail == '') {
-
-    mail.addClass('invalid');
-    mail.removeClass('valid');
-    return false;
+  if (email.length < 1) {
+    $('#mail').after('<span class="error">Email is required</span>');
   } else {
-    mail.addClass('valid');
-    mail.removeClass('invalid');
-    return true;
-  }
-});
+    let regexEmail = /\w.+@[a-zA-Z_-]+\.[a-zA-Z]{2,3}$/;
+    let validEmail = regexEmail.test(email);
+    if (!validEmail) {
+      $('#mail').after('<span class="error">Enter a valid email</span>')
+    }
+  };
 
-// ensures the credit card entered is valid, if not, makes the border red
-$('#cc-num').on('focusout', function(e) {
-  let regexCredit = /^\d{11,16}$/;
-  let creditCardNum = $(e.target);
-  if( !$(creditCardNum).val().match(regexCredit) ||  !creditCardNum == '') {
+  if (!$('input[type=checkbox]').is(':checked')) {
+    $('.activities').after('<span class="error">Check at Least 1 Activity</span>')
+  };
 
-    $(creditCardNum).addClass('invalid');
-    $(creditCardNum).removeClass('valid');
-    return false;
+  if ($('select option[value="credit card"]').attr('selected', true)) {
+    if (ccNum.length < 1) {
+      $('#cc-num').after('<span class="error">Credit Card required</span>');
+    } else {
+      let regexCredit = /^\d{13,16}$/;
+      let validCredit = regexCredit.test(ccNum);
+      if (!validCredit) {
+        $('#cc-num').after('<span class="error">Enter valid credit card</span>')
+      }
+    };
+
+    if (zipCode.length < 1) {
+      $('#zip').after('<span class="error">Zip required</span>');
+    } else {
+      let regexZip = /^\d{5}$/;
+      let validZip = regexZip.test(zipCode);
+      if (!validZip) {
+        $('#zip').after('<span class="error">Enter valid zipcode</span>')
+      }
+    };
+
+    if (cvv.length < 1) {
+      $('#cvv').after('<span class="error">cvv required</span>');
+    } else {
+      let regexCVV = /^\d{3,4}$/;
+      let validCVV = regexCVV.test(cvv);
+      if (!validCVV) {
+        $('#cvv').after('<span class="error">Enter valid cvv</span>')
+      }
+    };
+
+    if (email.length < 1) {
+      $('#mail').after('<span class="error">Email is required</span>');
+    } else {
+      let regexEmail = /\w.+@[a-zA-Z_-]+\.[a-zA-Z]{2,3}$/;
+      let validEmail = regexEmail.test(email);
+      if (!validEmail) {
+        $('#mail').after('<span class="error">Enter a valid email</span>')
+      }
+    }
   } else {
-    $(creditCardNum).addClass('valid');
-    $(creditCardNum).removeClass('invalid');
-    return true;
-  }
-});
+    ($('select option[value="paypal"]').attr('selected', true)) || ($('select option[value="bitcoin"]').attr('selected', true))
 
-// ensures the zip code entered is valid, if not, makes the border red
-$('#zip').on('focusout', function(e) {
-  let regexZip = /^[0-9]{5}$/;
-  let creditZip = $(e.target);
-  if( !$('#zip').val().match(regexZip) || !creditZip == '') {
+  };
 
-    creditZip.addClass('invalid');
-    creditZip.removeClass('valid');
-    return false;
-  } else {
-    creditZip.addClass('valid');
-    creditZip.addClass('invalid');
-    return true;
-  }
-});
-
-// ensures the cvv entered is valid, if not, makes the border red
-$('#cvv').on('focusout', function(e){
-let $regexCvv = /^\d{3,4}$/;
-let creditCvv = $(e.target);
-  if( !$(creditCvv).val().match($regexCvv) || !creditCvv == '') {
-    creditCvv.addClass('invalid');
-    creditCvv.removeClass('valid');
-    return false;
-  } else {
-    creditCvv.addClass('valid');
-    creditCvv.removeClass('invalid');
-    return true;
-  }
 });

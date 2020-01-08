@@ -144,12 +144,10 @@ option {
 
 /* STUFF I BORROWED  */
 
-input.invalid, textarea.invalid {
-	border: 2px solid red;
-}
-
-input.valid, textarea.valid {
-	border: 2px solid green;
+.error {
+  color: red;
+  margin-left: 5px;
+  font-size: 20px;
 }
 
 /* =================================
