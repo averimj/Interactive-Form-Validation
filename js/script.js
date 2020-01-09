@@ -73,7 +73,6 @@ $('label').click(function() {
 /* when the user picks a workshop, it checks to see if that 'day and time', is equal to any other workshops
 if it is, then disable the other workshop, and make it non-clickable */
 
-console.log(input);
 
 $('.activities').change(function(e) {
   let target = e.target;
@@ -134,7 +133,9 @@ $('#payment').change(function() {
 
 /*VALIDATION*/
 $('.container').submit( (e) => {
-  e.preventDefault();
+
+  let errorFlag = false;
+
   let name = $('#name').val();
   let email = $('#mail').val();
   let checkedWorkshop = $('input:checked')
@@ -142,7 +143,7 @@ $('.container').submit( (e) => {
   let zipCode = $('#zip').val();
   let cvv = $('#cvv').val();
 
-  $(".error").remove();
+  $('.error').remove();
 
   if (name.length < 1) {
     $('#name').after('<span class="error">Name is required</span>');
@@ -151,6 +152,7 @@ $('.container').submit( (e) => {
     let validName = regexName.test(name);
       if (!validName) {
         $('#name').after('<span class="error">Enter a valid name</span>')
+        errorFlag = true;
     }
   };
 
@@ -161,11 +163,14 @@ $('.container').submit( (e) => {
     let validEmail = regexEmail.test(email);
     if (!validEmail) {
       $('#mail').after('<span class="error">Enter a valid email</span>')
+      errorFlag = true;
     }
+
   };
 
   if (!$('input[type=checkbox]').is(':checked')) {
     $('.activities').after('<span class="error">Check at Least 1 Activity</span>')
+     errorFlag = true;
   };
 
   if ($('select option[value="credit card"]').attr('selected', true)) {
@@ -176,7 +181,9 @@ $('.container').submit( (e) => {
       let validCredit = regexCredit.test(ccNum);
       if (!validCredit) {
         $('#cc-num').after('<span class="error">Enter valid credit card</span>')
+        errorFlag = true;
       }
+
     };
 
     if (zipCode.length < 1) {
@@ -186,6 +193,7 @@ $('.container').submit( (e) => {
       let validZip = regexZip.test(zipCode);
       if (!validZip) {
         $('#zip').after('<span class="error">Enter valid zipcode</span>')
+        errorFlag = true;
       }
     };
 
@@ -196,21 +204,17 @@ $('.container').submit( (e) => {
       let validCVV = regexCVV.test(cvv);
       if (!validCVV) {
         $('#cvv').after('<span class="error">Enter valid cvv</span>')
+        errorFlag = true;
       }
+
     };
 
-    if (email.length < 1) {
-      $('#mail').after('<span class="error">Email is required</span>');
-    } else {
-      let regexEmail = /\w.+@[a-zA-Z_-]+\.[a-zA-Z]{2,3}$/;
-      let validEmail = regexEmail.test(email);
-      if (!validEmail) {
-        $('#mail').after('<span class="error">Enter a valid email</span>')
-      }
-    }
   } else {
     ($('select option[value="paypal"]').attr('selected', true)) || ($('select option[value="bitcoin"]').attr('selected', true))
 
   };
 
+  if (errorFlag === true){
+    e.preventDefault();
+  }
 });
